@@ -1,7 +1,17 @@
 import requests
 from bs4 import BeautifulSoup
+import time
 
-page = requests.get('https://solidtorrents.to/search?q=shark+bait')
+animation = "|/-\\"
+
+movie_title = input("Please enter a title: ")
+text_message = "please wait..."
+# Show the loading animation
+for i in range(10):
+    time.sleep(0.1)  # Add a small delay to make the animation visible
+    print(f"\r{animation[i % len(animation)]} {text_message}", end="", flush=True)
+
+page = requests.get(f'https://solidtorrents.to/search?q={movie_title}+yg')
 soup = BeautifulSoup(page.content, 'html.parser')
 
 container = soup.find('div', class_='w3-col s12 mt-1')
@@ -39,3 +49,6 @@ for movie_element in movie_elements:
 
 for movie in movies:
     print(movie)
+
+# Print a message to indicate that the loading is complete
+print("\nLoading complete!")
